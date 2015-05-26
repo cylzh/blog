@@ -1,0 +1,24 @@
+
+/****node调试****/(node-inspector)
+//安装
+npm install -g node-inspector
+
+//修改debug端口号 启动
+node-inspector --web-port=[8082]
+得到调试地址 http://127.0.0.1:56446/debug?port=5858 to start debugging.
+
+//启动应用
+node --debug app.js
+
+//刷新调试地址
+
+/****node热部署****/(supervisor)
+
+//安装
+npm install -g supervisor
+
+//启动
+supervisor app.js
+
+//启动调试
+supervisor --debug app.js
