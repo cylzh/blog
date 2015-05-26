@@ -22,3 +22,8 @@ supervisor app.js
 
 //启动调试
 supervisor --debug app.js
+
+
+/****模板swig***/
+
+地址http://www.cnblogs.com/elementstorm/p/3142644.html

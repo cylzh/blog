@@ -6,7 +6,9 @@ var Schema = mongodb.mongoose.Schema;
 
 //实例化表
 var MovieSchema = new Schema({
-    name: String
+    name: String,
+    content: String,
+    data: {type: Date, default: Date.now()}
 });
 var Movie = mongodb.mongoose.model("Movie", MovieSchema);
 
@@ -22,11 +24,12 @@ MovieDAO.prototype.save = function (obj, callback) {
 
 };
 
-MovieDAO.prototype.find = function (name,callback) {
-    Movie.find({name:name},function(err,obj){
-          callback(err,obj);
+MovieDAO.prototype.find = function (name, callback) {
+    Movie.find(name, function (err, obj) {
+        callback(err, obj);
     })
 };
+
 
 module.exports = new MovieDAO();
 

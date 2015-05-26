@@ -4,15 +4,15 @@
 
 var express = require('express');
 var routes = require('./routes');
-//var user = require('./routes/user');
+var movie = require('./routes/movie.js');
 var http = require('http');
 var path = require('path');
 var MongoStore = require("connect-mongo")(express);
 var flash = require("connect-flash");
-var render=require("./middleware/render.js");
+var render = require("./middleware/render.js");
 
 //express中使用swig模板
-var cons=require("consolidate");
+var cons = require("consolidate");
 var app = express();
 
 // all environments
@@ -63,7 +63,6 @@ app.use(function (req, res, next) {
     }
 
     next();
-
 })
 
 
@@ -84,6 +83,7 @@ if ('development' == app.get('env')) {
  app.get('/users', user.list);*/
 
 routes(app);
+movie(app);
 
 /*
  app.get("/",function(req,res){

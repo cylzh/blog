@@ -7,9 +7,14 @@ module.exports = function (app) {
 
     //首页
     app.get("/", function (req, res) {
-        res.render("index", {
-            title: "首页",
-            success: req.flash("success").toString()
+        Movie.find({}, function (err, obj) {
+            if (!err) {
+                res.render("index", {
+                    title: "首页",
+                    movies: obj,
+                    success: req.flash("success").toString()
+                });
+            }
         });
     });
 
@@ -31,11 +36,11 @@ module.exports = function (app) {
             if (!err) {
                 if (obj[0].password == json.password) {
                     req.session.user = json;
-                    req.flash("success","登陆成功");
+                    req.flash("success", "登陆成功");
                     return res.redirect("/");
                 } else {
-                   req.flash("error","用户或密码错误");
-                   return res.redirect("/login");
+                    req.flash("error", "用户或密码错误");
+                    return res.redirect("/login");
                 }
             } else {
                 res.send("登陆异常");

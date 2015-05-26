@@ -1,0 +1,25 @@
+
+{% extends 'layout.html'%}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% if error%}
+      <div>{{ error }}</div>
+{% endif %}
+
+{% block content %}
+    <form action="/reg" method="post">
+        <ul>
+            <li>
+                <label>昵称：</label>
+                <input type="text" name="name" placeholder="请输入用户名">
+            </li>
+            <li>
+                <label>密码：</label>
+                <input type="password" name="password" placeholer="请输入密码">
+            </li>
+
+        </ul>
+        <input type="submit" value="确定">
+    </form>
+{% endblock %}

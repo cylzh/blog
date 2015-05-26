@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-  swig模板
-</body>
-</html>
+{% extends 'layout.html'%}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block content%}
+<form action="/login" method="post">
+    <ul>
+        <li>
+            <label>昵称：</label>
+            <input type="text" name="name" placeholder="请输入用户名">
+        </li>
+        <li>
+            <label>密码：</label>
+            <input type="password" name="password" placeholer="请输入密码">
+        </li>
+    </ul>
+    <input type="submit" value="确定">
+</form>
+{% endblock %}
