@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-1.7.1.min.js"></script>
+</head>
+<body>
+<button onclick="playPause()">播放/暂停</button>
+<button onclick="fast()">快进</button>
+<button onclick="fullscreen()">全屏</button>
+<button onclick="next()">下一首</button>
+<video id="video" src="http://yinyueshiting.baidu.com/data2/music/131701191/122674119143262006132.m4a?xcode=f5e0dac7c0c66325a0cc505dc0621a48" width="320" height="240"  autobuffer style="display:none;"></video>
+
+<div class="progress"></div>
+<script>
+    var music=[
+        "http://yinyueshiting.baidu.com/data2/music/131701191/122674119143262006132.m4a?xcode=f5e0dac7c0c66325a0cc505dc0621a48",
+        "http://yinyueshiting.baidu.com/data2/music/37796608/1494510724120032.m4a?xcode=f983e7e629154af53d7cab37c0a62272",
+        "http://js.189.cn/activities/jsp/may_kd_act/image/Wiz%20Khalifa%20-%20See%20You%20Again.mp3"
+    ];
+
+
+    var video=document.getElementById("video");
+
+
+    function playPause(){
+        if(video.paused){
+            video.play();
+        }else{
+            video.pause();
+        }
+    }
+
+
+    function fast(){
+        video.currentTime += 50;
+    }
+
+    function fullscreen(){
+        video.webkitRequestFullScreen();
+        video.mozRequestFullScreen();
+    }
+
+    var currentCount=0,
+            musiclen=music.length;
+
+
+    function next(){
+        video.src=music[++currentCount];
+        if(currentCount>=musiclen-1){
+            currentCount=-1;
+        }
+        video.play();
+    }
+
+
+</script>
+</body>
+</html> 

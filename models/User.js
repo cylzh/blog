@@ -26,8 +26,8 @@ UserDto.prototype.save = function (obj, callback) {
 }
 
 UserDto.prototype.validate = function (obj, callback) {
-    this.find(obj.name, function(err,obj1){
-        callback(err,obj1)
+    this.find(obj.name, function (err, obj1) {
+        callback(err, obj1)
     })
 }
 

@@ -10,6 +10,8 @@ var path = require('path');
 var MongoStore = require("connect-mongo")(express);
 var flash = require("connect-flash");
 var render = require("./middleware/render.js");
+var setting = require("./setting.js");
+var mulipart=require("connect-multiparty");
 
 //express中使用swig模板
 var cons = require("consolidate");
@@ -38,6 +40,7 @@ app.use(express.logger('dev'));
 //解析请求体
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(mulipart({uploadDir:"./public/upload"}));
 
 //协助处理post请求，PUT,DELETE,其他http方法
 app.use(express.methodOverride());
@@ -58,7 +61,8 @@ app.use(render())
 app.use(function (req, res, next) {
     var user = req.session.user;
 
-    if (!user && (req.path !== "/login" && req.path !== "reg")) {
+    var checkLogin = setting.checkLogin.join(";");
+    if (!user && checkLogin.indexOf(req.path) === -1) {
         return res.redirect("/login");
     }
 
@@ -78,21 +82,10 @@ if ('development' == app.get('env')) {
 }
 
 //路由控制
-/*app.get('/', routes.index);
- app.get("/index1",routes.index1);
- app.get('/users', user.list);*/
-
 routes(app);
 movie(app);
 
-/*
- app.get("/",function(req,res){
- res.send("xxx");
- })*/
-
-
 //创建node服务器
 http.createServer(app).listen(app.get('port'), function () {
-
     console.log('Express server listening on port ' + app.get('port'));
 });

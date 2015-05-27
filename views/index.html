@@ -2,13 +2,58 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block style %}
+<style>
+
+    .form-search {
+        width: 500px;
+        display: inline-block;
+    }
+
+    .page {
+        min-height: 680px;
+    }
+
+    .form-search .search-query {
+        padding-left: 40px;
+    }
+
+    .movieList {
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-    <ul>
-    {% for movie in movies %}
-        <li>
-            <h2>{{ movie.name }}</h2>
-            <p>{{ movie.content }}</p>
-        </li>
-    {% endfor %}
-    </ul>
+<a href="/movie/add" class="btn btn-info ">新增</a>
+<form class="form-search search-only" action="/movie/search" id="movie-search" method="movie-search">
+    <i class="search-icon glyphicon glyphicon-search"></i>
+    <input type="text" class="form-control search-query" name="name">
+    <input type="submit" style="display: none;">
+</form>
+<div class="movieList">
+    <div class="row" id="movielist">
+        {% include "movie.html"%}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $("#movie-search").submit(function () {
+        var $this = $(this);
+        $.ajax({
+            type: "post",
+            url: $this.attr("action"),
+            data: $this.serialize(),
+            success: function (data) {
+                $("#movielist").html(data);
+            }
+        })
+
+
+        return false;
+    })
+</script>
+
 {% endblock %}

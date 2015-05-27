@@ -25,5 +25,10 @@ supervisor --debug app.js
 
 
 /****模板swig***/
-
 地址http://www.cnblogs.com/elementstorm/p/3142644.html
+
+/****文件上传***/
+添加中间件connect-multiparty
+
+app var multiparty=require("connect-multiparty");
+    app.use(mulipart({uploadDir:"./public/upload"}))

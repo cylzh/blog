@@ -1,8 +1,10 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.navbar-header .header-icon {
+    line-height: 40px;
+    font-size: 20px;
 }
 
-a {
-  color: #00B7FF;
+.nav-text {
+    line-height: 40px;
 }
+
+.footer{color:#fff;}

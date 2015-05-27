@@ -1,0 +1,19 @@
+{% for movie in movies %}
+<div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+        <img class="img-rounded" src="{{movie.image}}">
+        <div class="caption text-center">
+            <h2>{{ movie.name }}</h2>
+
+            <p>
+                {{ movie.content }}
+            </p>
+
+            <p>
+                <a href="/movie/add/{{ movie.id }}" class="btn btn-warning">修改</a>
+                <a href="/movie/del/{{ movie.id }}" class="btn btn-default">删除</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endfor %}

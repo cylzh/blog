@@ -3,13 +3,16 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="/stylesheets/bootflat.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    {% block style %}{% endblock %}
 </head>
 <body>
 
       {% include "head.html" %}
 
-      <div>
+      <div class="container page">
            {% block content %}
                 missing content
            {% endblock %}
@@ -17,5 +20,7 @@
 
      {% include "footer.html" ignore missing %}
 
+     <script src="/javascripts/jquery-1.10.2.min.js"></script>
+     {% block script%}{% endblock %}
 </body>
 </html>

@@ -1,13 +1,30 @@
 {% extends 'layout.html'%}
 
-{% block title%}{{ title }}{% endblock%}
+{% block title %}{{ title }}{% endblock%}
+{% block style %}
+<style>
+    .item {
+        margin-top: 10px;
+    }
 
- {% block content %}
-     <form action="/movie/add" method="post">
-         <input type="text" name="name">
-         <textarea name="content">
-
-         </textarea>
-         <input type="submit" value="提交">
-     </form>
- {% endblock %}
+    .btn {
+        margin-top: 10px;
+    }
+    .movie-form{min-height: 600px;}
+</style>
+{% endblock%}
+{% block content %}
+<form action="/movie/add" method="post" enctype="multipart/form-data" class="movie-form">
+    <div class="item">
+        <label>标题：</label><input type="text" name="name" class="form-control" value="{{ movie.name }}">
+    </div>
+    <div class="item">
+        <label>内容：</label><textarea name="content" class="form-control">{{- movie.content -}}</textarea>
+    </div>
+    <div class="item">
+        <label>图片：</label><input type="file" name="file">
+    </div>
+    <input type="hidden" value="{{ movie.id }}" name="id">
+    <input type="submit" value="提交" class="btn btn-info">
+</form>
+{% endblock %}
