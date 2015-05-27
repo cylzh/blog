@@ -55,11 +55,18 @@ app.use(express.session({
     })
 }));
 
-app.use(render())
+app.use(render());
+
+//路由解析
+app.use(app.router);
+
+//静态文件目录
+app.use(express.static(path.join(__dirname, 'public')));
 
 //前置拦截器
 app.use(function (req, res, next) {
     var user = req.session.user;
+    var path=req.path;
 
     var checkLogin = setting.checkLogin.join(";");
     if (!user && checkLogin.indexOf(req.path) === -1) {
@@ -69,12 +76,6 @@ app.use(function (req, res, next) {
     next();
 })
 
-
-//路由解析
-app.use(app.router);
-
-//静态文件目录
-app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
