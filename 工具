@@ -32,3 +32,10 @@ supervisor --debug app.js
 
 app var multiparty=require("connect-multiparty");
     app.use(mulipart({uploadDir:"./public/upload"}))
+
+
+
+
+
+
+/*系统学习node*/

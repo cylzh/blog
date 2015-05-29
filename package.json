@@ -1,24 +1,25 @@
 {
-    "name": "application-name",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "start": "node app.js"
-    },
-    "dependencies": {
-        "express": "3.5.0",
-        "ejs": "*",
-        "mongodb": "*",
-        "mongoose": "*",
-        "connect-mongo": "*",
-        "connect-flash": "*",
-        "connect-multiparty": "*",
-        "swig": "*",
-        "consolidate": "*",
-        "connect-static": "*",
-        "connect": "2.14.1",
-        "morgan": "*",
-        "cookie-parser": "*",
-        "markdown": "*"
-    }
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "connect": "2.14.1",
+    "connect-flash": "*",
+    "connect-mongo": "*",
+    "connect-multiparty": "*",
+    "connect-static": "*",
+    "consolidate": "*",
+    "cookie-parser": "*",
+    "ejs": "*",
+    "express": "3.5.0",
+    "markdown": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "morgan": "*",
+    "mysql": "^2.7.0",
+    "swig": "*"
+  }
 }

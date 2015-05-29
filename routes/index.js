@@ -9,7 +9,6 @@ module.exports = function (app) {
     //首页
     app.get("/", function (req, res,next) {
         Movie.find({}, function (err, movies) {
-            try{
                 if (!err) {
                     movies.forEach(function (movie) {
                         movie.content = markdown.toHTML(movie.content);
@@ -20,9 +19,6 @@ module.exports = function (app) {
                         movies: movies
                     });
                 }
-            }catch (e){
-                next()
-            }
 
         });
     });

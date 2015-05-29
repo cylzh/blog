@@ -15,6 +15,7 @@ var mulipart = require("connect-multiparty");
 var static = require("connect-static");
 //express中使用swig模板
 var cons = require("consolidate");
+var fs = require("fs");
 var app = express();
 
 // all environments
@@ -58,6 +59,8 @@ app.use(express.session({
 //静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 //前置拦截器
 app.use(function (req, res, next) {
     var user = req.session.user;
@@ -76,9 +79,11 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+
 //路由控制
 routes(app);
 movie(app);
+
 
 //404错误页
 app.use(function (req, res, next) {
