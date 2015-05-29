@@ -9,18 +9,29 @@
     {% block style %}{% endblock %}
 </head>
 <body>
+{% include "head.html" %}
 
-      {% include "head.html" %}
+<div class="container page">
+    {% if success %}
+    <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    {% block content %}
+    missing content
+    {% endblock %}
+</div>
 
-      <div class="container page">
-           {% block content %}
-                missing content
-           {% endblock %}
-      </div>
+{% include "footer.html" ignore missing %}
 
-     {% include "footer.html" ignore missing %}
+<script src="/javascripts/jquery-1.10.2.min.js"></script>
+<script>
+    setTimeout(function () {
+        $(".alert-success").hide();
+    }, 3000)
 
-     <script src="/javascripts/jquery-1.10.2.min.js"></script>
-     {% block script%}{% endblock %}
+</script>
+{% block script%}{% endblock %}
 </body>
 </html>

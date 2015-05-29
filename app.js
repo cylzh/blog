@@ -11,8 +11,8 @@ var MongoStore = require("connect-mongo")(express);
 var flash = require("connect-flash");
 var render = require("./middleware/render.js");
 var setting = require("./setting.js");
-var mulipart=require("connect-multiparty");
-
+var mulipart = require("connect-multiparty");
+var static = require("connect-static");
 //express中使用swig模板
 var cons = require("consolidate");
 var app = express();
@@ -40,7 +40,7 @@ app.use(express.logger('dev'));
 //解析请求体
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(mulipart({uploadDir:"./public/upload"}));
+app.use(mulipart({uploadDir: "./public/upload"}));
 
 //协助处理post请求，PUT,DELETE,其他http方法
 app.use(express.methodOverride());
@@ -55,26 +55,20 @@ app.use(express.session({
     })
 }));
 
-app.use(render());
-
-//路由解析
-app.use(app.router);
-
 //静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
 
 //前置拦截器
 app.use(function (req, res, next) {
     var user = req.session.user;
-    var path=req.path;
-
-    var checkLogin = setting.checkLogin.join(";");
-    if (!user && checkLogin.indexOf(req.path) === -1) {
+    var path = req.path;
+    if (!user && (path !== "/login" && path !== "/reg")) {
         return res.redirect("/login");
     }
-
     next();
 })
+
+app.use(render());
 
 
 // development only
@@ -85,6 +79,11 @@ if ('development' == app.get('env')) {
 //路由控制
 routes(app);
 movie(app);
+
+//404错误页
+app.use(function (req, res, next) {
+    res.render("404");
+})
 
 //创建node服务器
 http.createServer(app).listen(app.get('port'), function () {

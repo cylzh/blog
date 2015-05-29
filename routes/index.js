@@ -3,18 +3,27 @@
  */
 var Movie = require("../models/Movie.js");
 var User = require("../models/User.js");
+var markdown = require("markdown").markdown;
 module.exports = function (app) {
 
     //首页
-    app.get("/", function (req, res) {
-        Movie.find({}, function (err, obj) {
-            if (!err) {
-                res.render("index", {
-                    title: "首页",
-                    movies: obj,
-                    success: req.flash("success").toString()
-                });
+    app.get("/", function (req, res,next) {
+        Movie.find({}, function (err, movies) {
+            try{
+                if (!err) {
+                    movies.forEach(function (movie) {
+                        movie.content = markdown.toHTML(movie.content);
+                    })
+
+                    res.render("index", {
+                        title: "首页",
+                        movies: movies
+                    });
+                }
+            }catch (e){
+                next()
             }
+
         });
     });
 
@@ -32,18 +41,14 @@ module.exports = function (app) {
 
     app.post("/login", function (req, res) {
         var json = req.body;
-        User.validate(json, function (err, obj) {
-            if (!err) {
-                if (obj[0].password == json.password) {
-                    req.session.user = json;
-                    req.flash("success", "登陆成功");
-                    return res.redirect("/");
-                } else {
-                    req.flash("error", "用户或密码错误");
-                    return res.redirect("/login");
-                }
+        User.login(json, function (rs, msg) {
+            if (rs) {
+                req.session.user = json;
+                req.flash("success", msg);
+                res.redirect("/")
             } else {
-                res.send("登陆异常");
+                req.flash("error", msg);
+                res.redirect("/login");
             }
         })
     });
@@ -57,9 +62,7 @@ module.exports = function (app) {
     //注册
     app.get("/reg", function (req, res) {
         res.render("reg", {
-            title: "注册",
-            error: req.flash("error").toString(),
-            success: req.flash("success").toString()
+            title: "注册"
         });
     });
 

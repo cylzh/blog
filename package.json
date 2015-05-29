@@ -12,8 +12,13 @@
         "mongoose": "*",
         "connect-mongo": "*",
         "connect-flash": "*",
-        "connect-multiparty":"*",
+        "connect-multiparty": "*",
         "swig": "*",
-        "consolidate":"*"
+        "consolidate": "*",
+        "connect-static": "*",
+        "connect": "2.14.1",
+        "morgan": "*",
+        "cookie-parser": "*",
+        "markdown": "*"
     }
 }

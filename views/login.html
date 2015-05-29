@@ -3,17 +3,45 @@
 {% block title %} {{title}} {% endblock %}
 
 {% block content%}
-<form action="/login" method="post">
+
+<form action="/login" method="post" id="login" class="minH600">
     <ul>
         <li>
             <label>昵称：</label>
-            <input type="text" name="name" placeholder="请输入用户名">
+            <input type="text" name="name" placeholder="请输入用户名" class="form-control">
         </li>
         <li>
             <label>密码：</label>
-            <input type="password" name="password" placeholer="请输入密码">
+            <input type="password" name="password" placeholer="请输入密码" class="form-control">
         </li>
     </ul>
-    <input type="submit" value="确定">
+    <div class="ml40">
+        <input type="submit" class="btn btn-info" value="确定">
+        <a href="/reg" class="btn btn-default">注册</a>
+    </div>
 </form>
+
 {% endblock %}
+
+{% block script%}
+<script>
+    $("#login").submit(function () {
+        var name = $("[name=name]");
+        var password = $("[name=password]");
+        var error = 0;
+        if ($.trim(name.val()) == "") {
+            error++;
+            name.addClass("has-error")
+        }
+
+        if ($.trim(password.val()) == "") {
+            error++;
+            password.addClass("has-error")
+        }
+        if (error > 0) {
+
+            return false;
+        }
+    });
+</script>
+{% endblock%}

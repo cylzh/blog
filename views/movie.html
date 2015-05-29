@@ -3,10 +3,13 @@
     <div class="thumbnail">
         <img class="img-rounded" src="{{movie.image}}">
         <div class="caption text-center">
+
             <h2>{{ movie.name }}</h2>
 
             <p>
+                {% autoescape %}
                 {{ movie.content }}
+                {% endautoescape  %}
             </p>
 
             <p>

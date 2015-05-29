@@ -1,3 +1,7 @@
+
+ul,li{list-style: none;}
+.minH600{min-height: 600px;}
+.ml40{margin-left:40px;}
 .navbar-header .header-icon {
     line-height: 40px;
     font-size: 20px;
@@ -6,5 +10,5 @@
 .nav-text {
     line-height: 40px;
 }
-
+.has-error{border-color:#da4453; }
 .footer{color:#fff;}

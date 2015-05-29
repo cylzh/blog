@@ -25,9 +25,17 @@ UserDto.prototype.save = function (obj, callback) {
 
 }
 
-UserDto.prototype.validate = function (obj, callback) {
-    this.find(obj.name, function (err, obj1) {
-        callback(err, obj1)
+UserDto.prototype.login = function (obj, callback) {
+    this.find(obj.name, function (err, rs) {
+        if (!err) {
+            if (rs.length > 0 && rs[0].password == obj.password) {
+                callback(true, "登陆成功")
+            } else {
+                callback(false, "用户名或密码错误");
+            }
+        } else {
+            callback(false, "异常");
+        }
     })
 }
 

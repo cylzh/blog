@@ -12,6 +12,10 @@ module.exports = function () {
 
             var user = req.session.user;
             options.user = user;
+            var success = req.flash("success").toString();
+            var error = req.flash("error").toString();
+            options.success = success;
+            options.error = error;
             _render.call(res, view, options, callback);
         }
 
