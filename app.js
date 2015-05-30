@@ -60,7 +60,6 @@ app.use(express.session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 //前置拦截器
 app.use(function (req, res, next) {
     var user = req.session.user;

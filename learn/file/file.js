@@ -21,7 +21,6 @@ fs.readFile("test.txt", {encoding: "utf-8"}, function (err, data) {
 //文件状态
 fs.stat("test.txt", function (err, stats) {
     if (!err) {
-
         console.log(stats.isFile());
     }
 })
@@ -31,7 +30,7 @@ fs.readdir("../public", function (err, files) {
     console.log(files);
 });
 
-//写文件
+//写文件 若文件不存在则创建
 fs.writeFile("test1.txt", "文件不存在则创建", function (err) {
 
 });
@@ -40,8 +39,10 @@ fs.writeFile("test1.txt", "\n这里是添加的内容", {flag: 'a'}, function (e
 
 })
 
+//删除
 fs.unlink("test.txt", function (err) {
 });
+
 
 /*path模块*/
 /*转换成标准路径*/

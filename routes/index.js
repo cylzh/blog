@@ -4,6 +4,7 @@
 var Movie = require("../models/Movie.js");
 var User = require("../models/User.js");
 var markdown = require("markdown").markdown;
+
 module.exports = function (app) {
 
     //首页
