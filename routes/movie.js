@@ -84,4 +84,14 @@ module.exports = function (app) {
         })
     });
 
+    app.post("/upload",function(req,res){
+        /*可以不上传图片*/
+        if (files.file.size > 0) {
+            var target = "/upload/movie/" + files.file.name;
+            fs.renameSync(files.file.path, "./public" + target);
+            movie.image = target;
+        } else {
+            fs.unlinkSync(files.file.path);
+        }
+    })
 }

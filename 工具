@@ -35,7 +35,18 @@ app var multiparty=require("connect-multiparty");
 
 
 
-
-
-
 /*系统学习node*/
+
+
+/*创建自己的node package*/
+
+npm init初始化
+    package
+         main 入口文件 require(packagename)时会调用的函数
+         scripts 定义命令
+            "start":"node start"
+         readmeFilename:"README.md" markdown文件
+
+npm publish
+
+npm adduser
