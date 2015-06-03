@@ -13,6 +13,8 @@ var conn = mysql.createConnection({
     port:3306
 })
 
+
+
 conn.connect(function(err){
     if(err){
 
@@ -22,3 +24,10 @@ conn.connect(function(err){
 
     console.log("connection connect successed")
 });
+
+
+/*
+*1.
+*
+*
+* */

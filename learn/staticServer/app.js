@@ -1,15 +1,17 @@
 /**
  * Created by jade on 2015/6/3.
  */
+
 /*
  * 静态文件服务器
  * */
-
 var connect = require("connect");
 var fs = require("fs");
 var url = require("url");
 var path = require("path");
 var swig = require("swig");
+
+//node中使用swig
 var tpl = swig.compileFile("../../views/staticserver.html");
 
 //媒体资源
@@ -58,9 +60,6 @@ var app = connect()
                 }
                 return res.end(tpl({"files": files}));
             })
-
         })
-
-
     })
     .listen(3005);
