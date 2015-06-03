@@ -9,6 +9,7 @@ var fs = require("fs");
 var path = require("path");
 
 
+
 //读取文件
 fs.readFile("test.txt", {encoding: "utf-8"}, function (err, data) {
 
@@ -23,6 +24,11 @@ fs.stat("test.txt", function (err, stats) {
     if (!err) {
         console.log(stats.isFile());
     }
+})
+
+//判断一个文件是否存在
+fs.exists("test.txt",function(exists){
+
 })
 
 //读文件夹

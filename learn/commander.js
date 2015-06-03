@@ -32,6 +32,17 @@
  * 编写自己的node命令
  *
  * */
+console.log("window" in this);
+
+//进程
+console.log(process);
+
+//模块路径
+console.log(__filename);
+
+//目录文件名 （各个模块内部的）
+console.log(__dirname);
+
 var fs = require("fs");
 var path = process.cwd();
 
