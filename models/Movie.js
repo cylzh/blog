@@ -2,15 +2,19 @@
  * Created by jade on 2015/5/25.
  */
 var mongodb = require('./db');
+
+
 var Schema = mongodb.mongoose.Schema;
 
-//实例化表
+//定义模型
 var MovieSchema = new Schema({
     name: String,
     content: String,
     image: {type: String, default: "/upload/movie/1副本.jpg"},
     data: {type: Date, default: Date.now()}
 });
+
+//访问模型
 var Movie = mongodb.mongoose.model("Movie", MovieSchema);
 
 

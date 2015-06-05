@@ -8,19 +8,18 @@ var markdown = require("markdown").markdown;
 module.exports = function (app) {
 
     //首页
-    app.get("/", function (req, res,next) {
+    app.get("/", function (req, res, next) {
         Movie.find({}, function (err, movies) {
-                if (!err) {
-                    movies.forEach(function (movie) {
-                        movie.content = markdown.toHTML(movie.content);
-                    })
+            if (!err) {
+                movies.forEach(function (movie) {
+                    movie.content = markdown.toHTML(movie.content);
+                })
 
-                    res.render("index", {
-                        title: "首页",
-                        movies: movies
-                    });
-                }
-
+                res.render("index", {
+                    title: "首页",
+                    movies: movies
+                });
+            }
         });
     });
 

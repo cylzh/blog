@@ -7,6 +7,7 @@
 
 var fs = require("fs");
 var path = require("path");
+var request = require("request");
 
 /*flags为：（制定了操作文件的一些方式）
  'r' - 以只读方式打开文件，当文件不存在的时候发生异常
@@ -124,21 +125,26 @@ fs.rmdir("./test1", function (err) {
 
 //监听文件
 /*
-*fs.watch(filename,[options],callback)
-*
-*callback(curr,prev);
-* curr,prev都为fs.stat的对象实例
-*
-* */
+ *fs.watch(filename,[options],callback)
+ *
+ *callback(curr,prev);
+ * curr,prev都为fs.stat的对象实例
+ *
+ * */
 fs.watch("./file.js", function (curr, prev) {
     console.log(curr);
     console.log(prev)
 })
 
 /*
-* fs.unwatch(filename,callback(curr,prev));
-* */
+ * fs.unwatch(filename,callback(curr,prev));
+ * */
 
+
+//stream
+
+var music="http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/239130183/12267411954000128.mp3?xcode=e3622df90ac74ddb9824035d6041d0a0&song_id=122674119";
+request(music).pipe(fs.createWriteStream("喜欢你.mp3"));
 
 
 

@@ -1,7 +1,8 @@
 /**
  * Created by jade on 2015/5/26.
  */
-module.exports = function () {
+
+module.exports = function (app) {
 
     return function (req, res, next) {
 
@@ -16,7 +17,8 @@ module.exports = function () {
             var error = req.flash("error").toString();
             options.success = success;
             options.error = error;
-            _render.call(res, view, options, callback);
+
+            _render.call(res, view+".html", options, callback);
         }
 
         next();
