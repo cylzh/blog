@@ -18,7 +18,7 @@ module.exports = function (app) {
             options.success = success;
             options.error = error;
 
-            _render.call(res, view+".html", options, callback);
+            _render.call(res, view + ".html", options, callback);
         }
 
         next();
