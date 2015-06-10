@@ -3,18 +3,20 @@
     <div class="thumbnail">
         <img class="img-rounded" src="{{movie.image}}">
         <div class="caption text-center">
-
             <h2>{{ movie.name }}</h2>
-
             <p>
                 {% autoescape %}
                 {{ movie.content }}
                 {% endautoescape  %}
             </p>
-            <span>{{ movie.data|date("Y-m-d H:i:s",-480) }}</span>
+            <span>{{ movie.date|date("Y-m-d H:i:s",-480) }}</span>
             <p>
+
+                <a href="/movie/detial/{{ movie.id }}" class="btn btn-info">详情</a>
+                {%if movie.user.name==user.name %}
                 <a href="/movie/add/{{ movie.id }}" class="btn btn-warning">修改</a>
                 <a href="/movie/del/{{ movie.id }}" class="btn btn-default">删除</a>
+                {%endif%}
             </p>
         </div>
     </div>

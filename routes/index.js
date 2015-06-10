@@ -9,7 +9,13 @@ module.exports = function (app) {
 
     //首页
     app.get("/", function (req, res, next) {
-        Movie.find({}, function (err, movies) {
+
+        var searchModel={
+            q:"",
+            pageSize:10,
+            pageNumber:1
+        }
+        Movie.findPageResult(searchModel, function (err,pageCount, movies) {
             if (!err) {
                 movies.forEach(function (movie) {
                     movie.content = markdown.toHTML(movie.content);
@@ -39,8 +45,7 @@ module.exports = function (app) {
         var json = req.body;
         User.login(json, function (rs, msg) {
             if (rs) {
-                req.session.user = json;
-                req.flash("success", msg);
+                req.session.user = msg;
                 res.redirect("/")
             } else {
                 req.flash("error", msg);
@@ -67,7 +72,7 @@ module.exports = function (app) {
 
         User.find(json.name, function (err, obj) {
             if (err) {
-                req.flash("异常");
+                req.flash("error","异常");
                 return res.redirect("/reg");
             }
 
@@ -78,14 +83,13 @@ module.exports = function (app) {
             }
 
             //否则保存
-            User.save(json, function (err) {
+            User.save(json, function (err,user) {
                 if (err) {
                     req.flash("error", "异常");
                     return res.redirect("/reg");
                 }
 
-                req.flash("success", "注册成功");
-                req.session.user = json;
+                req.session.user = user;
                 return res.redirect("/");
             })
         })

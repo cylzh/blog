@@ -3,6 +3,8 @@
  */
 
 var Movie = require("../models/Movie.js");
+var markdown = require("markdown").markdown;
+
 var fs = require("fs");
 module.exports = function (app) {
 
@@ -21,7 +23,7 @@ module.exports = function (app) {
 
     /*add*/
     app.get("/movie/add", function (req, res) {
-        res.render("moviedetial", {
+        res.render("movieedit", {
             title: "新增"
         })
     });
@@ -29,7 +31,7 @@ module.exports = function (app) {
     app.post("/movie/add", function (req, res) {
         var movie = req.body;
         var files = req.files;
-
+        var user = req.session.user;
 
         /*可以不上传图片*/
         if (files.file.size > 0) {
@@ -48,6 +50,7 @@ module.exports = function (app) {
                 return res.redirect("/");
             })
         } else {
+            movie.user = user;
             Movie.save(movie, function (err) {
                 if (err) {
                     res.redirect("/movie/add");
@@ -55,7 +58,6 @@ module.exports = function (app) {
                 res.redirect("/")
             });
         }
-
     });
 
     //update
@@ -66,7 +68,7 @@ module.exports = function (app) {
                 res.send("错误的movie id");
             }
 
-            res.render("moviedetial", {
+            res.render("movieedit", {
                 title: "修改",
                 movie: obj
             })
@@ -84,14 +86,20 @@ module.exports = function (app) {
         })
     });
 
-    app.post("/upload",function(req,res){
-        /*可以不上传图片*/
-        if (files.file.size > 0) {
-            var target = "/upload/movie/" + files.file.name;
-            fs.renameSync(files.file.path, "./public" + target);
-            movie.image = target;
-        } else {
-            fs.unlinkSync(files.file.path);
-        }
+
+    /*详情*/
+    app.get("/movie/detial/:id", function (req, res) {
+        var id = req.params.id;
+        Movie.findById(id, function (err, obj) {
+            if (err) {
+                res.send("错误的movie id");
+            }
+
+            obj.content = markdown.toHTML(obj.content);
+            res.render("moviedetial", {
+                title: "详情",
+                movie:obj
+            })
+        })
     })
 }

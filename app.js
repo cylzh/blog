@@ -5,6 +5,8 @@
 var express = require('express');
 var routes = require('./routes');
 var movie = require('./routes/movie.js');
+var comment = require("./routes/comment.js");
+var user = require("./routes/user.js");
 var http = require('http');
 var path = require('path');
 var MongoStore = require("connect-mongo")(express);
@@ -17,7 +19,6 @@ var static = require("connect-static");
 var cons = require("consolidate");
 var fs = require("fs");
 var app = express();
-
 
 // all environments
 //设置端口
@@ -73,7 +74,6 @@ app.use(function (req, res, next) {
 
 app.use(render());
 
-
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
@@ -83,7 +83,8 @@ if ('development' == app.get('env')) {
 //路由控制
 routes(app);
 movie(app);
-
+comment(app);
+user(app);
 
 //404错误页
 app.use(function (req, res, next) {
@@ -94,3 +95,4 @@ app.use(function (req, res, next) {
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
+

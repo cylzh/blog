@@ -16,6 +16,7 @@
     "cookie-parser": "*",
     "ejs": "*",
     "express": "3.5.0",
+    "loader": "^0.1.6",
     "markdown": "*",
     "mongodb": "*",
     "mongoose": "*",

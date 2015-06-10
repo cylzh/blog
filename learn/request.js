@@ -8,57 +8,65 @@
 var connect = require("connect");
 var request = require("request");
 var fs = require("fs");
-var $ = require("cheerio");
+var cheerio = require("cheerio");
 
 var app = connect()
     .use(function (req, res, next) {
         //simple use  it supports HTTPS and follows redirects
         //request({url:xxxx,headers:{"User-Agent":"request"}})
-
-        request("http://so.baiten.cn/results?q=2012&type=63", function (err, resr, body) {
+        var url = "http://cpquery.sipo.gov.cn/txnQueryBibliographicData.do?select-key:shenqingh=2007101455555&select-key:zhuanlilx=1&select-key:backPage=&inner-flag:open-type=window&inner-flag:flowno=1433492573319"
+        request(url, function (err, resr, body) {
             /* fs.writeFile("res.txt",JSON.stringify(resr),function(){
              res.end(body);
              })*/
 
             /*
-            *res.statusCode
-            *res.body
-            *res.headers
-            * */
+             *res.statusCode
+             *res.body
+             *res.headers
+             * */
             if (!err && resr.statusCode == 200) {
-                var content = $(body);
+                var $ = cheerio.load(body);
 
-                var rs = [];
-                var ans = content.find(".srl-detail-an");
-                ans.each(function (index, ele) {
-                    rs.push($(this).text());
+                var anjianywzt = $("[name$=anjianywzt]");
+                var zhuanlimc = $('[name$=zhuanlimc]');
+                var shenqingr = $('[name$=shenqingr]');
+                var zt = "案件状态:"
+                var mc = "专利名称:";
+                var r = "申请日";
+
+
+                var b2 = "";
+                var span = $("span");
+                var idspan = span.last();
+                var str = idspan.attr("id");
+
+                var b = 0;
+                for (var i = 0; i < str.length; i = i + 2) {
+                    if (b > 255) {
+                        b = 0;
+                    }
+                    var b1 = parseInt(str.substring(i, i + 2), 16) ^ b++
+                    b2 += String.fromCharCode(b1);
+                }
+
+                b2.split(",").forEach(function (item) {
+                    var id = "[id=" + item + "]";
+                    zt += anjianywzt.find(id).text();
+                    mc += zhuanlimc.find(id).text();
+                    r += shenqingr.find(id).text();
+                });
+
+                res.writeHead(200, {
+                    "Content-Type": "text/html;charset=utf-8"
                 })
-                res.end(rs.join(";"));
+                res.write(zt +"\n\r"+ mc + "\n\r" + r +"\r");
+                res.end()
                 return;
             }
 
             res.end("请求出错!");
-
         })
-
-        //streaming
-        /*request("http://js.189.cn/activities/jsp/may_kd_act/image/Wiz%20Khalifa%20-%20See%20You%20Again.mp3").pipe(fs.createWriteStream("see you again.mp3"))
-         res.end();*/
-
-        //forms
-        //application/x-www-form-urlencoded
-        /*  request.post({url: "http://login.baiten.cn/Login/JsLogin", form: {lgName: "test", lgPassword: "111111"}}, function (err, resr, body) {
-         res.end(body);
-         })*/
-
-        //multipart/form-data
-        /* var myfile = {
-         my_file: fs.createReadStream("see you again.mp3")
-         }
-         request.post({url: "http://localhost:3000/upload", formData: myfile}, function (err, resr, callback) {
-
-         res.end();
-         })*/
     })
     .listen(3003);
 
