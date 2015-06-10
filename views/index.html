@@ -4,7 +4,6 @@
 
 {% block style %}
 <style>
-
     .form-search {
         width: 500px;
         display: inline-block;
@@ -22,6 +21,7 @@
         margin-top: 20px;
     }
 </style>
+<link href="/stylesheets/page.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -33,14 +33,30 @@
 </form>
 
 <div class="movieList">
-    <div class="row" id="movielist">
-        {% include "movie.html"%}
-    </div>
+    {% include "movie.html"%}
 </div>
 {% endblock %}
 
 {% block script %}
+<script src="/javascripts/bootstrap-paginator.js"></script>
 <script>
+
+    var page = $('#page1'),
+            pageNum = page.attr("pageNum"),
+            totalPage = page.attr("pageCount");
+
+    var options = {
+        currentPage: pageNum,
+        totalPages: totalPage,
+        numberOfPages: totalPage == 1 ? 0 : 4,
+        pageUrl: function (type, page, current) {
+            return "/?p=" + page;
+        }
+    }
+
+    $('#page1').bootstrapPaginator(options);
+
+
     $("#movie-search").submit(function () {
         var $this = $(this);
         $.ajax({

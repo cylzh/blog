@@ -10,12 +10,18 @@ module.exports = function (app) {
     //首页
     app.get("/", function (req, res, next) {
 
-        var searchModel={
-            q:"",
-            pageSize:10,
-            pageNumber:1
+        var searchModel = {
+            q: "",
+            pageNumber: 1,
+            pageSize:2
+        };
+
+        var pageNumber = req.query.p;
+        if (!isNaN(pageNumber)) {
+            searchModel.pageNumber = pageNumber;
         }
-        Movie.findPageResult(searchModel, function (err,pageCount, movies) {
+
+        Movie.findPageResult(searchModel, function (err, pageCount, movies) {
             if (!err) {
                 movies.forEach(function (movie) {
                     movie.content = markdown.toHTML(movie.content);
@@ -23,7 +29,11 @@ module.exports = function (app) {
 
                 res.render("index", {
                     title: "首页",
-                    movies: movies
+                    movies: movies,
+                    page: {
+                        pageCount: pageCount,
+                        pageNum: searchModel.pageNumber
+                    }
                 });
             }
         });
@@ -72,7 +82,7 @@ module.exports = function (app) {
 
         User.find(json.name, function (err, obj) {
             if (err) {
-                req.flash("error","异常");
+                req.flash("error", "异常");
                 return res.redirect("/reg");
             }
 
@@ -83,7 +93,7 @@ module.exports = function (app) {
             }
 
             //否则保存
-            User.save(json, function (err,user) {
+            User.save(json, function (err, user) {
                 if (err) {
                     req.flash("error", "异常");
                     return res.redirect("/reg");
