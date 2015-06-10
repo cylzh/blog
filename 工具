@@ -6,6 +6,7 @@ npm install -g node-inspector
 //修改debug端口号 启动
 node-inspector --web-port=[8082]
 得到调试地址 http://127.0.0.1:56446/debug?port=5858 to start debugging.
+/*新版本下好像不能设置--web-port*/
 
 //启动应用
 node --debug app.js
@@ -39,7 +40,6 @@ app var multiparty=require("connect-multiparty");
 
 
 /*创建自己的node package*/
-
 npm init初始化
     package
          main 入口文件 require(packagename)时会调用的函数
@@ -50,3 +50,13 @@ npm init初始化
 npm publish
 
 npm adduser
+
+/*nrm*/
+npm register 快速切换 nrm use
+
+/*mongodb */
+安装
+path
+启动 mongod --dbpath datapath
+
+
