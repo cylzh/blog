@@ -12,18 +12,18 @@
 var mongoose = require("mongoose");
 var fs = require("fs");
 //连接mongodb
-var db = mongoose.createConnection("mongodb://localhost:27017/nodejs");
+var db = mongoose.connect("mongodb://localhost:27017/nodejs");
 
 //连接异常
-db.on("error", function (error) {
-    console.log(error);
-})
+/*db.on("error", function (error) {
+ console.log(error);
+ })*/
 
 
 //Schema结构
 var testSchema = new mongoose.Schema({
-    username: String,
-    password: String,
+    username: {type: String},
+    password: {type: String, match: [/.{7,}/, "密码格式不正确"], maxlength: 9},
     Date: {type: Date, default: Date.now()}
 });
 
@@ -31,26 +31,34 @@ var testSchema = new mongoose.Schema({
 var TestModel = db.model("test", testSchema);
 
 //增加记录 基于entity（基于实体操作）
-/*var doc = {username: "test", password: "123456"};
- var testModel = new TestModel(doc);
- testModel.save(function (err) {
- if (err) {
- console.log(err);
- } else {
- console.log("save ok");
- }
- });*/
+var doc = {username: " test  ", password: "12345611"};
+var testModel = new TestModel(doc);
+testModel.validate(function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        testModel.save(function (err) {
+            if (err) {
+                console.log(String(err));
+            } else {
+                console.log("save ok");
+            }
+        });
+    }
+})
 
 
 //增加记录 基于Model操作
-/*var doc = {username: "test", password: "123456"};
+/*
+ var doc = {username: "test", password: "123456"};
  TestModel.create(doc, function (err) {
  if (err) {
  console.log(err);
  } else {
  console.log("save ok");
  }
- });*/
+ });
+ */
 
 //修改记录
 /*
@@ -69,11 +77,6 @@ TestModel.find({username: "test"}, function (err, result) {
     if (err) {
         console.log(err);
     } else {
-        result.forEach(function (item) {
-            console.log("id:" + item.id);
-            console.log("_id:" + item._id);
-
-        })
         /*  fs.writeFile("./test.txt", result, function (err) {
 
          });*/
@@ -85,19 +88,29 @@ TestModel.find({username: "test"}, function (err, result) {
  *
  * find(criteria, fields, options,callback)
  * criteria查询条件
- * fields输出字段
+ * fields输出字段 为null则表示输入全部，如果要输出相应字段可以设置 "name date"
  * options
  * */
-TestModel.find({}, "username password", {skip: 2, limit: 100, sort: {Date: -1}}, function (err, result) {
+TestModel.find({}, null, {skip: 2, limit: 100, sort: {Date: -1}}, function (err, result) {
     fs.writeFile("./test1.txt", result, function (err) {
 
     });
 });
+/*
+*
+* 等同于下面的
+* TestModel.find({}).skip().limit().sort();
+* */
 
 //删除
-TestModel.remove({username:"test"},function(err){
+/*TestModel.remove({username: "test"}, function (err) {
 
-});
+ });*/
+
+
+/*
+ *
+ * */
 
 
 
