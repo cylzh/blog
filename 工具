@@ -51,12 +51,30 @@ npm publish
 
 npm adduser
 
-/*nrm*/
+/*nrm(npm registry 快速切换)*/
+安装 npm install nrm -g
 npm register 快速切换 nrm use
 
 /*mongodb */
 安装
 path
 启动 mongod --dbpath datapath
+
+/*添加自动提示*/
+https://github.com/borisyankov/DefinitelyTyped
+
+
+/*bower(前台js包管理工具)*/
+安装 npm install bower -g
+安装jquery bower install jquery#version <-g>
+更新 bower update jquery
+删除 bower uninstall jquery
+查询 bower search jquery
+信息 bower info jquery
+打开首页 bower home jquery
+
+待续 如何发布自己的bower包
+
+
 
 

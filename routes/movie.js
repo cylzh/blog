@@ -67,7 +67,6 @@ module.exports = function (app) {
             if (err) {
                 res.send("错误的movie id");
             }
-
             res.render("movieedit", {
                 title: "修改",
                 movie: obj
@@ -85,7 +84,6 @@ module.exports = function (app) {
             return res.redirect("/")
         })
     });
-
 
     /*详情*/
     app.get("/movie/detial/:id", function (req, res) {
