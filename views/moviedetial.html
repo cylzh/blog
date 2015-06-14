@@ -1,30 +1,41 @@
-{% extends 'layout.html'%}
+{% extends "layout.html"%}
 
-{% block title %}{{ title }}{% endblock%}
-{% block style %}
+{% block style%}
 <style>
-    .item {
-        margin-top: 10px;
-    }
-
     .btn {
         margin-top: 10px;
     }
-    .movie-form{min-height: 600px;}
 </style>
 {% endblock%}
-{% block content %}
-<form action="/movie/add" method="post" enctype="multipart/form-data" class="movie-form">
-    <div class="item">
-        <label>标题：</label><input type="text" name="name" class="form-control" value="{{ movie.name }}">
-    </div>
-    <div class="item">
-        <label>内容：</label><textarea name="content" class="form-control">{{- movie.content -}}</textarea>
-    </div>
-    <div class="item">
-        <label>图片：</label><input type="file" name="file">
-    </div>
-    <input type="hidden" value="{{ movie.id }}" name="id">
+
+{%block content%}
+
+<h2>{{ movie.name }}</h2>
+
+{% autoescape %}
+<p>{{ movie.content }}</p>
+{%endautoescape%}
+
+<img src="{{ movie.image }}" style="width:200px;height:200px;">
+
+<form action="/comment/add" method="post" class="movie-comment-form">
+    <textarea name="connect" class="form-control" placeholder="这里可以添加您的评论"></textarea>
+    <input type="hidden" value="{{ movie.id }}" name="movieid">
     <input type="submit" value="提交" class="btn btn-info">
 </form>
+<div id="comment-list">
+
+</div>
+{%endblock%}
+
+{% block script%}
+<script>
+    $.ajax({
+        url: "/comment/{{ movie.id }}",
+        type: "get",
+        success: function (data) {
+            $("#comment-list").html(data);
+        }
+    });
+</script>
 {% endblock %}

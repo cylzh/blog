@@ -1,0 +1,17 @@
+<div class="col-md-12">
+    <h3>评论({{count}})</h3>
+    <ul class="media-list">
+        {% for comment in commentlist%}
+        <li class="media">
+            <a class="pull-left">
+                <img src="{{user.logo}}" class="media-object img-rounded">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">{{ comment.user.name }}</h4>
+                <p>{{ comment.connect }}</p>
+            </div>
+
+        </li>
+        {% endfor%}
+    </ul>
+</div>

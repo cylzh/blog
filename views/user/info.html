@@ -1,0 +1,43 @@
+{%extends "../layout.html" %}
+{%block title%}
+{{title}}
+{%endblock%}
+{%block style%}
+<style>
+    .userLogo {
+        width: 60px;
+        height: 60px;
+    }
+</style>
+{%endblock%}
+
+{%block content%}
+<ul>
+    <li>
+        <label>用户名:</label>
+        <span>{{ user.name }}</span>
+    </li>
+    <li>
+        <label>用户头像:</label>
+        {%if user.logo%}
+        <img src="{{user.logo}}" alt="用户头像" class="userLogo" id="userLogo">
+        {%endif%}
+        <span>修改头像</span>
+
+        <form action="/user/upload" enctype="multipart/form-data" method="post" target="logoframe">
+            <input type="file" name="logo" style="display: inline-block;">
+            <input type="submit" value="上传" class="btn btn-info">
+        </form>
+        <iframe name="logoframe" id="logoframe" style="display: none"></iframe>
+    </li>
+</ul>
+{%endblock%}
+
+{%block script%}
+<script>
+
+    function review(src) {
+        $("#userLogo").attr("src", src);
+    }
+</script>
+{%endblock%}

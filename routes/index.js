@@ -8,19 +8,34 @@ var markdown = require("markdown").markdown;
 module.exports = function (app) {
 
     //首页
-    app.get("/", function (req, res,next) {
-        Movie.find({}, function (err, movies) {
-                if (!err) {
-                    movies.forEach(function (movie) {
-                        movie.content = markdown.toHTML(movie.content);
-                    })
+    app.get("/", function (req, res, next) {
 
-                    res.render("index", {
-                        title: "首页",
-                        movies: movies
-                    });
-                }
+        var searchModel = {
+            q: "",
+            pageNumber: 1,
+            pageSize:2
+        };
 
+        var pageNumber = req.query.p;
+        if (!isNaN(pageNumber)) {
+            searchModel.pageNumber = pageNumber;
+        }
+
+        Movie.findPageResult(searchModel, function (err, pageCount, movies) {
+            if (!err) {
+                movies.forEach(function (movie) {
+                    movie.content = markdown.toHTML(movie.content);
+                })
+
+                res.render("index", {
+                    title: "首页",
+                    movies: movies,
+                    page: {
+                        pageCount: pageCount,
+                        pageNum: searchModel.pageNumber
+                    }
+                });
+            }
         });
     });
 
@@ -40,8 +55,7 @@ module.exports = function (app) {
         var json = req.body;
         User.login(json, function (rs, msg) {
             if (rs) {
-                req.session.user = json;
-                req.flash("success", msg);
+                req.session.user = msg;
                 res.redirect("/")
             } else {
                 req.flash("error", msg);
@@ -68,7 +82,7 @@ module.exports = function (app) {
 
         User.find(json.name, function (err, obj) {
             if (err) {
-                req.flash("异常");
+                req.flash("error", "异常");
                 return res.redirect("/reg");
             }
 
@@ -79,14 +93,13 @@ module.exports = function (app) {
             }
 
             //否则保存
-            User.save(json, function (err) {
+            User.save(json, function (err, user) {
                 if (err) {
                     req.flash("error", "异常");
                     return res.redirect("/reg");
                 }
 
-                req.flash("success", "注册成功");
-                req.session.user = json;
+                req.session.user = user;
                 return res.redirect("/");
             })
         })

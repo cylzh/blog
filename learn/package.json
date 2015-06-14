@@ -1,0 +1,9 @@
+{
+    "name": "nodefoler",
+    "version": "0.0.1",
+    "description": "List all the files in a directory!",
+    "preferGlobal": "true",
+    "bin": { "nf": "commander.js" },
+    "author": "steel1990",
+    "engines": { "node": "*" }
+}

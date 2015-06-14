@@ -1,0 +1,28 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "commander": "^2.8.1",
+    "connect": "2.14.1",
+    "connect-flash": "*",
+    "connect-mongo": "*",
+    "connect-multiparty": "*",
+    "connect-static": "*",
+    "consolidate": "*",
+    "cookie-parser": "*",
+    "ejs": "*",
+    "express": "3.5.0",
+    "loader": "^0.1.6",
+    "markdown": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "morgan": "*",
+    "mysql": "^2.7.0",
+    "request": "^2.57.0",
+    "swig": "*"
+  }
+}
