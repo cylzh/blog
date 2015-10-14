@@ -12,7 +12,7 @@
 var mongoose = require("mongoose");
 var fs = require("fs");
 //连接mongodb
-var db = mongoose.connect("mongodb://localhost/nodejs");
+var db = mongoose.connect("mongodb://localhost:27017/nodejs");
 
 //连接异常
 /*db.on("error", function (error) {
@@ -32,49 +32,33 @@ var TestModel = db.model("test", testSchema);
 
 //增加记录 基于entity（基于实体操作）
 var doc = {username: " test  ", password: "12345611"};
-
-//Document
-//var testModel = new TestModel(doc);
-
-
-TestModel.findById("5578ebe763993b083c1b93d6", function (err, user) {
-
-    console.log(user);
-    user.username = "test1";
-    user.save(function(){
-
-    })
-});
-
-
-/*
- testModel.validate(function (err) {
- if (err) {
- console.log(err);
- } else {
- testModel.save(function (err) {
- if (err) {
- console.log(String(err));
- } else {
- console.log("save ok");
- }
- });
- }
- })
- */
+var testModel = new TestModel(doc);
+testModel.validate(function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        testModel.save(function (err) {
+            if (err) {
+                console.log(String(err));
+            } else {
+                console.log("save ok");
+            }
+        });
+    }
+})
 
 
 //增加记录 基于Model操作
-
- /*var doc = {username: "test", password: "1234516"};
+/*
+ var doc = {username: "test", password: "123456"};
  TestModel.create(doc, function (err) {
  if (err) {
  console.log(err);
  } else {
  console.log("save ok");
  }
- });*/
-
+ });
+ */
 
 //修改记录
 /*
@@ -89,17 +73,15 @@ TestModel.findById("5578ebe763993b083c1b93d6", function (err, user) {
  */
 
 //查询
-/*
- TestModel.find({username: "test"}, function (err, result) {
- if (err) {
- console.log(err);
- } else {
- fs.writeFile("./test.txt", result, function (err) {
+TestModel.find({username: "test"}, function (err, result) {
+    if (err) {
+        console.log(err);
+    } else {
+        /*  fs.writeFile("./test.txt", result, function (err) {
 
- });
- }
- });
- */
+         });*/
+    }
+});
 
 /*
  * 查询
@@ -109,16 +91,16 @@ TestModel.findById("5578ebe763993b083c1b93d6", function (err, user) {
  * fields输出字段 为null则表示输入全部，如果要输出相应字段可以设置 "name date"
  * options
  * */
-/*TestModel.find({}, null, {skip: 2, limit: 100, sort: {Date: -1}}, function (err, result) {
- fs.writeFile("./test1.txt", result, function (err) {
+TestModel.find({}, null, {skip: 2, limit: 100, sort: {Date: -1}}, function (err, result) {
+    fs.writeFile("./test1.txt", result, function (err) {
 
- });
- });*/
+    });
+});
 /*
- *
- * 等同于下面的 (链式查询)
- * TestModel.find({}).skip().limit().sort();
- * */
+*
+* 等同于下面的
+* TestModel.find({}).skip().limit().sort();
+* */
 
 //删除
 /*TestModel.remove({username: "test"}, function (err) {

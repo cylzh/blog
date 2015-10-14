@@ -2,8 +2,6 @@
  * Created by jade on 2015/5/25.
  */
 var mongodb = require("./db.js");
-var crypto = require("crypto");
-var secrityKey = "ddsoma";//简单的加盐
 
 //表
 var Schema = mongodb.mongoose.Schema;
@@ -14,33 +12,24 @@ var UserSchema = new Schema({
     createDate: {type: Date, default: Date.now()}
 });
 
-
 //初始化表
 var User = mongodb.mongoose.model("User", UserSchema);
 
 var UserDto = function () {
 }
 
-UserDto.prototype.crypto = function (password) {
-    var sha1 = crypto.createHash("sha1");
-    sha1.update(password + secrityKey);
-    var sha = sha1.digest("hex")
-    return sha;
-};
-
 UserDto.prototype.save = function (obj, callback) {
-    obj.password = this.crypto(obj.password);
     var user = new User(obj);
     user.save(function (err) {
-        callback(err, user);
+        callback(err,user);
     })
+
 }
 
 UserDto.prototype.login = function (obj, callback) {
-    var that = this;
-    that.find(obj.name, function (err, rs) {
+    this.find(obj.name, function (err, rs) {
         if (!err) {
-            if (rs.length > 0 && rs[0].password == that.crypto(obj.password)) {
+            if (rs.length > 0 && rs[0].password == obj.password) {
                 callback(true, rs[0])
             } else {
                 callback(false, "用户名或密码错误");
