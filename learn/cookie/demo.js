@@ -61,9 +61,11 @@ connect()
          }*/
 
         if (req.session.isVisit) {
+            console.log(req.session.test);
             res.end("欢迎再次访问");
         } else {
             req.session.isVisit = 1;
+            req.session.test=1;
             res.end("欢迎访问");
         }
 
