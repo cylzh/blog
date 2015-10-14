@@ -1,5 +1,18 @@
 /**
  * Created by jade on 2015/6/3.
+ *
+ * 客户端缓存
+ *
+ * Last-Modified : fs.stat(path,function(err,stats){ stats.mtime.toUTCString() })
+ *
+ * If-Modified-Since==lastModifiedTime   res.writeHead(304);
+ *
+ * Exprise
+ *
+ * cache-control max-age
+ *
+ * 注：时间要转换成GTM(toUTCString())
+ *
  */
 
 /*
@@ -34,17 +47,27 @@ var app = connect()
             //如果是文件则返回对应的文件
             if (stats.isFile()) {
                 //获取当前文件的mimetype
+                var lastmtime = stats.mtime.toUTCString();
                 var thismimeType = mimetype[path.extname(pathname)] || "text/html";
+                if (lastmtime == req.headers["if-modified-since"]) {
+                    res.writeHead(304, {
+                        'Content-Type': thismimeType
+                    });
+                    return res.end();
+                }
                 fs.readFile(pathname, "utf8", function (err, data) {
                     if (!err) {
                         //res.writeHead(statusCode,[],[headers]);
                         //只能搞一次
-                        res.writeHead(200, {
-                            'Content-Type': thismimeType
-                        });
 
-                        //setHeader
-                        //res.setHeader("content-type",thismimeType);
+                        var exprise = new Date();
+                        exprise.setTime(exprise.getTime() + 10 * 365 * 24 * 60 * 60 * 1000);
+                        res.setHeader("Exprise", exprise.toUTCString());
+                        res.writeHead(200, {
+                            'Content-Type': thismimeType,
+                            'Last-Modified': lastmtime,
+                            "Cache-Control": "max-age=10*365*24*60*60*1000"
+                        });
 
                         res.end(data);
                         return;
