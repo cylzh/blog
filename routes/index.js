@@ -8,12 +8,15 @@ var markdown = require("markdown").markdown;
 module.exports = function (app) {
 
     //首页
-    app.get("/", function (req, res, next) {
+    app.get("/", function (req,res,next) {
+        console.log(1)
+        next();
+    }, function (req, res, next) {
 
         var searchModel = {
             q: "",
             pageNumber: 1,
-            pageSize:2
+            pageSize: 2
         };
 
         var pageNumber = req.query.p;

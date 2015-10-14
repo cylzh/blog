@@ -9,27 +9,27 @@ var connect = require("connect");
 
 var app = connect().
     use(connect.logger()).
-    use(connect.favicon(__dirname + "/public/images/favicon.ico")).
+    //use(connect.favicon(__dirname + "/public/images/favicon.ico")).
 
     use(connect.json()).
-    use(connect.urlencoded()).
-    use(connect.multipart({ uploadDir: __dirname + "/public/upload" })).
+    use(connect.urlencoded())
+   // use(connect.multipart({ uploadDir: __dirname + "/public/upload" }))
 
-    use(connect.cookieParser())
+    .use(connect.cookieParser())
 
     //基于cookieSession的会话，基于session的会话
     .use(connect.cookieSession({
         secret: '123',
         cookie: {maxAge: 1000 * 60 * 60 * 24}
-    })).
+    }))
 
-    use(connect.directory(__dirname + "/public"))
+    //.use(connect.directory(__dirname + "/public"))
 
-    .use(function (req, res, next) {
-        console.log(1);
+    .use("/",function (req, res, next) {
+        console.log(11);
         next();
     })
-    .use(function (req, res, next) {
+    .use("/test",function (req, res, next) {
         console.log(2);
     })
 

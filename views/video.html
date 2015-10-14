@@ -3,56 +3,138 @@
 <head>
     <meta charset="utf-8">
     <script src="jquery-1.7.1.min.js"></script>
+    <style>
+      /*  .a{width:100px;padding:10px;box-sizing: border-box;}
+        .b{width:100%;height: 100px;color: red;}
+        .b {background:url(https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=3476459538,3148280779&fm=96&s=14E7F916C8E8CC013650E8C90200F0BA) no-repeat;}
+        .b:hover{color:black}
+*/
+
+    <!--    .parent{width:810px;margin:0 auto;overflow: hidden;}
+        .side{width:200px;float:left;background:#C00000;height:100px;}
+        .main{float:right;width:600px;background:#4F81BD;height:100px;}
+
+
+        .slide{width:200px;height:100px;position: relative;background:#BDD7EE;}
+        .pointer{position: absolute;right:10px;bottom:10px;}
+        .pointer i{width:10px;height:10px;border-radius: 50%;display: inline-block;margin-left:5px;background-color: black;}
+        .pointer .current{background-color:white;}
+      .a{ width:200px; height:100px;border:1px solid #333;} .b{ width:100px;height:100px;background-color:red; }
+
+        ul^li{color:red;}
+        .li:first-of-type{box-shadow: none}
+
+      td table{ float:left; background-position:left; }
+      .ul li .p{color:red;}
+        ul>li>p{color:black;}
+      ul li p.p{color:#fff;}
+        ul li:first-child p{color:green;}
+
+      .parent{ width:90px;}
+      .parent p{ float:right; width:30px; }-->
+    </style>
+
+
 </head>
 <body>
-<button onclick="playPause()">播放/暂停</button>
-<button onclick="fast()">快进</button>
-<button onclick="fullscreen()">全屏</button>
-<button onclick="next()">下一首</button>
-<video id="video" src="http://yinyueshiting.baidu.com/data2/music/131701191/122674119143262006132.m4a?xcode=f5e0dac7c0c66325a0cc505dc0621a48" width="320" height="240"  autobuffer style="display:none;"></video>
+<!--<button onclick="play.playPause()">播放/暂停</button>
+<button onclick="play.fast()">快进</button>
+<button onclick="play.fullscreen()">全屏</button>
+<button onclick="play.next()">下一首</button>
+<video id="video"
+       src="http://yinyueshiting.baidu.com/data2/music/131701191/122674119143262006132.m4a?xcode=f5e0dac7c0c66325a0cc505dc0621a48"
+       width="320" height="240" autobuffer style="display:none;"></video>
 
-<div class="progress"></div>
+<div class="a"><div class="b"></div></div>
+<div class="parent">
+    <div class="side">侧栏</div>
+    <div class="main">主栏</div>
+</div>
+<div>22222222222</div>
+<div class="parent">
+    <p>a</p>
+    <p>b</p>
+    <p>c</p>
+</div>
+<div class="a"><div class="b"></div></div>
+&lt;!&ndash; /xxxx &ndash;&gt;
+
+<ul class="ul">
+    <li>
+        <p class="p">3333333333333</p>2222222222222222
+    </li>
+</ul>
+<tabel>
+    <tr>
+        <td>
+            <table>222</table>
+        </td>
+    </tr>
+
+
+</tabel>
+<input>
+<select>
+    <option selected>
+
+    </option>
+</select>
+<div class="slide">
+    &lt;!&ndash; 图片省略 &ndash;&gt;
+    &lt;!&ndash; 以下是指示器 &ndash;&gt;
+    <div class="pointer"><i class="current"></i><i></i><i></i></div>
+</div>
+<input type="time">
+<div>有一个新闻标题，效果如图，标题宽度为200px，文字字体为宋体，加粗，文字大小为16px，颜色为黑色，行高为25px</div>-->
+
+
+
 <script>
-    var music=[
-        "http://yinyueshiting.baidu.com/data2/music/131701191/122674119143262006132.m4a?xcode=f5e0dac7c0c66325a0cc505dc0621a48",
-        "http://yinyueshiting.baidu.com/data2/music/37796608/1494510724120032.m4a?xcode=f983e7e629154af53d7cab37c0a62272",
-        "http://js.189.cn/activities/jsp/may_kd_act/image/Wiz%20Khalifa%20-%20See%20You%20Again.mp3"
-    ];
+    var video = document.getElementById("video");
 
+    function playMenu() {
+        var music = [
+            "http://yinyueshiting.baidu.com/data2/music/131701191/122674119143262006132.m4a?xcode=f5e0dac7c0c66325a0cc505dc0621a48",
+            "http://yinyueshiting.baidu.com/data2/music/37796608/1494510724120032.m4a?xcode=f983e7e629154af53d7cab37c0a62272",
+            "http://js.189.cn/activities/jsp/may_kd_act/image/Wiz%20Khalifa%20-%20See%20You%20Again.mp3"
+        ];
 
-    var video=document.getElementById("video");
+        var currentCount = 0;
 
+        return {
+            playPuse: function () {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            },
 
-    function playPause(){
-        if(video.paused){
-            video.play();
-        }else{
-            video.pause();
+            fast: function () {
+                video.currentTime += 50;
+            },
+
+            fullscreen: function () {
+                video.webkitRequestFullScreen();
+                video.mozRequestFullScreen();
+            },
+
+            addMusic: function (url) {
+
+                url && music.push(url);
+            },
+
+            next: function () {
+                video.src = music[++currentCount];
+                if (currentCount >= musiclen - 1) {
+                    currentCount = -1;
+                }
+                video.play();
+            }
         }
-    }
+    };
 
-
-    function fast(){
-        video.currentTime += 50;
-    }
-
-    function fullscreen(){
-        video.webkitRequestFullScreen();
-        video.mozRequestFullScreen();
-    }
-
-    var currentCount=0,
-            musiclen=music.length;
-
-
-    function next(){
-        video.src=music[++currentCount];
-        if(currentCount>=musiclen-1){
-            currentCount=-1;
-        }
-        video.play();
-    }
-
+    var play = playMenu();
 
 </script>
 </body>
